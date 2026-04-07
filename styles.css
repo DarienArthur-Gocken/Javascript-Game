@@ -1,0 +1,19 @@
+.popup-add {
+    position: fixed;
+    pointer-events: none;
+    color: green;
+    font-size: 14px;
+    user-select: none;
+    animation: popupFloat 1s ease-out forwards;
+}
+
+@keyframes popupFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-80px) scale(1.2);
+    }
+}
