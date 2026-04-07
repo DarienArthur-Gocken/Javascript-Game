@@ -9,7 +9,7 @@ const upgrades = [
 ];
 
 function updateDisplay() {
-    document.getElementById('score-display').textContent = 'Money: ' + bakedGoods;
+    document.getElementById('score-display').textContent = 'Baked Goods: ' + bakedGoods;
     document.getElementById('rate-display').textContent = 'Profit per Click: ' + goodsPerClick;
 }
 
@@ -17,3 +17,23 @@ document.getElementById('click-btn').addEventListener('click', function() {
     bakedGoods += goodsPerClick;
     updateDisplay();
 });
+
+function renderUpgrades() {
+    const upgradesDiv = document.getElementById('upgrades');
+    upgradesDiv.innerHTML = '';
+
+    upgrades.forEach(upgrade => {
+        let newUpgrade = document.createElement('div');
+        newUpgrade.innerHTML = `
+            Name: ${upgrade.name}
+            Cost: ${upgrade.cost} Baked Goods.
+            Bonus:  ${upgrade.display} per click.
+            <button onclick="buyUpgrade(${upgrade.id})">Buy</button>
+        `
+
+        
+        upgradesDiv.appendChild(newUpgrade);
+    });
+}
+
+renderUpgrades();
