@@ -4,16 +4,19 @@ let goodsPerClick = 1;
 
 let goodsPerSecond = 0;
 
+let clicksPersecond = 0;
+
 const upgrades = [
-    {id: 1, name: "Bigger Oven", cost: 10, bonus: 2, display: "2 Extra $ per click", type: "buff"},
-    {id: 2, name: "Better Ingredients", cost: 25, bonus: 6, display: "6 Extra $ per click", type: "buff"},
-    {id: 3, name: "Bigger Store", cost: 50, bonus: 0.001, display: "1 $ per second", type: "gps"},
-    {id: 3, name: "Hire another baker", cost: 100, bonus: goodsPerClick, display: "Double your $ per click", type: "buff"}
+    {id: 1, name: "Bigger Oven", cost: 10, bonus: 1, display: "1 Extra $ per click", type: "buff"},
+    {id: 2, name: "Better Ingredients", cost: 30, bonus: 8, display: "6 Extra $ per click", type: "buff"},
+    {id: 3, name: "Bigger Store", cost: 100, bonus: 1, display: "1 extra click per second", type: "gps"},
+    {id: 4, name: "Hire another baker", cost: 500, bonus: goodsPerClick, display: "Double your $ per click", type: "buff"}
 ];
 
 function updateDisplay() {
     document.getElementById('score-display').textContent = 'Baked Goods: ' + bakedGoods;
     document.getElementById('rate-display').textContent = 'Goods per Click: ' + goodsPerClick;
+    document.getElementById('auto-display').textContent = 'Goods per Second: ' + clicksPersecond*goodsPerClick;
     upgrades[3].bonus = goodsPerClick;
 }
 
@@ -43,7 +46,7 @@ function renderUpgrades() {
         newUpgrade.innerHTML = `
             Name: ${upgrade.name}
             Cost: ${upgrade.cost} Baked Goods.
-            Bonus:  ${upgrade.display} per click.
+            Bonus:  ${upgrade.display}.
         `
 
         let buyButton = document.createElement('button');
@@ -63,14 +66,24 @@ function buyUpgrade(id) {
     const currentupgrade = upgrades.find(u => u.id === id);
 
     if (bakedGoods >= currentupgrade.cost) {
-        goodsPerClick = goodsPerClick + currentupgrade.bonus;
-        bakedGoods = bakedGoods - currentupgrade.cost;
-        updateDisplay();
-        renderUpgrades();
+        if (currentupgrade.type == "buff") {
+            goodsPerClick = goodsPerClick + currentupgrade.bonus;
+            bakedGoods = bakedGoods - currentupgrade.cost;
+            updateDisplay();
+            renderUpgrades();
+        }
+        else {
+            clicksPersecond++;
+            bakedGoods = bakedGoods - currentupgrade.cost;
+            updateDisplay();
+            renderUpgrades();
+        }
     }
 }
 
 setInterval(function () {
-    bakedGoods = bakedGoods + goodsPerSecond;
+    goodsPerSecond = goodsPerClick;
+    for (let i = 0; i < clicksPersecond; i++) {
+    bakedGoods = goodsPerSecond + bakedGoods; }
     updateDisplay();
-})
+}, 1000);
