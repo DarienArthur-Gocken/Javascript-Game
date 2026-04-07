@@ -4,17 +4,20 @@ let goodsPerClick = 1;
 
 let currentadd = 0;
 
+let goodsPerSecond = 0;
+
 const upgrades = [
-    {id: 1, name: "Bigger Oven", cost: 10, bonus: 3, display: "3 Extra $ per click"},
-    {id: 2, name: "Better Ingredients", cost: 25, bonus: 7, display: "7 Extra $ per click"},
-    {id: 3, name: "Hire another baker", cost: 50, bonus: goodsPerClick, display: "Double your $ per click"}
+    {id: 1, name: "Bigger Oven", cost: 10, bonus: 2, display: "2 Extra $ per click", type: "buff"},
+    {id: 2, name: "Better Ingredients", cost: 25, bonus: 6, display: "6 Extra $ per click", type: "buff"},
+    {id: 3, name: "Bigger Store", cost: 50, bonus: 1, display: "1 $ per second", type: "gps"},
+    {id: 3, name: "Hire another baker", cost: 100, bonus: goodsPerClick, display: "Double your $ per click", type: "buff"}
 ];
 
 function updateDisplay() {
     document.getElementById('score-display').textContent = 'Baked Goods: ' + bakedGoods;
     document.getElementById('rate-display').textContent = 'Goods per Click: ' + goodsPerClick;
     document.getElementById('current-add').textContent = currentadd;
-    upgrades[2].bonus = goodsPerClick;
+    upgrades[3].bonus = goodsPerClick;
 }
 
 document.getElementById('click-btn').addEventListener('click', function() {
@@ -59,3 +62,8 @@ function buyUpgrade(id) {
         renderUpgrades();
     }
 }
+
+setInterval(function () {
+    bakedGoods = bakedGoods + goodsPerClick;
+    updateDisplay();
+})
