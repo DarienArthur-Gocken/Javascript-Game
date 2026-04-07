@@ -9,7 +9,7 @@ let clicksPersecond = 0;
 const upgrades = [
     {id: 1, name: "Bigger Oven", cost: 10, bonus: 1, display: "1 Extra $ per click", type: "buff"},
     {id: 2, name: "Better Ingredients", cost: 30, bonus: 8, display: "6 Extra $ per click", type: "buff"},
-    {id: 3, name: "Bigger Store", cost: 100, bonus: 1, display: "1 extra click per second", type: "gps"},
+    {id: 3, name: "Bigger Store", cost: 100, bonus: 1, display: "1 automatic click per second", type: "gps"},
     {id: 4, name: "Hire another baker", cost: 500, bonus: goodsPerClick, display: "Double your $ per click", type: "buff"}
 ];
 
@@ -84,6 +84,7 @@ function buyUpgrade(id) {
 setInterval(function () {
     goodsPerSecond = goodsPerClick;
     for (let i = 0; i < clicksPersecond; i++) {
-    bakedGoods = goodsPerSecond + bakedGoods; }
+        bakedGoods = goodsPerSecond + bakedGoods; 
+    }
     updateDisplay();
 }, 1000);
