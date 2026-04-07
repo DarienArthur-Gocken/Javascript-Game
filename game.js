@@ -37,3 +37,14 @@ function renderUpgrades() {
 }
 
 renderUpgrades();
+
+function buyUpgrade(id) {
+    const currentupgrade = upgrades.find(u => u.id === id);
+
+    if (bakedGoods >= currentupgrade.cost) {
+        goodsPerClick = goodsPerClick + currentupgrade.bonus;
+        bakedGoods = bakedGoods - currentupgrade.cost;
+        updateDisplay();
+        renderUpgrades();
+    }
+}
