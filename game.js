@@ -10,7 +10,7 @@ const upgrades = [
 
 function updateDisplay() {
     document.getElementById('score-display').textContent = 'Baked Goods: ' + bakedGoods;
-    document.getElementById('rate-display').textContent = 'Profit per Click: ' + goodsPerClick;
+    document.getElementById('rate-display').textContent = 'Goods per Click: ' + goodsPerClick;
     upgrades[2].bonus = goodsPerClick;
 }
 
