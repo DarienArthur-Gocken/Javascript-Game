@@ -10,12 +10,13 @@ const upgrades = [
 
 function updateDisplay() {
     document.getElementById('score-display').textContent = 'Baked Goods: ' + bakedGoods;
-    document.getElementById('rate-display').textContent = 'Profit per Click: ' + goodsPerClick;
+    document.getElementById('rate-display').textContent = 'Goods per Click: ' + goodsPerClick;
 }
 
 document.getElementById('click-btn').addEventListener('click', function() {
     bakedGoods += goodsPerClick;
     updateDisplay();
+    renderUpgrades();
 });
 
 function renderUpgrades() {
@@ -28,9 +29,14 @@ function renderUpgrades() {
             Name: ${upgrade.name}
             Cost: ${upgrade.cost} Baked Goods.
             Bonus:  ${upgrade.display} per click.
-            <button onclick="buyUpgrade(${upgrade.id})">Buy</button>
         `
 
+        let buyButton = document.createElement('button');
+        buyButton.disabled = upgrade.cost > bakedGoods;
+        buyButton.onclick = () => buyUpgrade(upgrade.id);
+        buyButton.textContent = 'buy';
+
+        newUpgrade.appendChild(buyButton);
         
         upgradesDiv.appendChild(newUpgrade);
     });
