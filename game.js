@@ -4,8 +4,6 @@ let goodsPerClick = 1;
 
 let currentadd = 0;
 
-let goodsPerSecond = 0;
-
 const upgrades = [
     {id: 1, name: "Bigger Oven", cost: 10, bonus: 2, display: "2 Extra $ per click", type: "buff"},
     {id: 2, name: "Better Ingredients", cost: 25, bonus: 6, display: "6 Extra $ per click", type: "buff"},
@@ -20,12 +18,22 @@ function updateDisplay() {
     upgrades[3].bonus = goodsPerClick;
 }
 
-document.getElementById('click-btn').addEventListener('click', function() {
+document.getElementById('click-btn').addEventListener('click', function(event) {
     bakedGoods += goodsPerClick;
-    currentadd = '+' + goodsPerClick;
     updateDisplay();
     renderUpgrades();
+    clickAnimation(event);
 });
+
+function clickAnimation(event) {
+    let popup = document.createElement('div');
+    popup.className = 'popup-add';
+    popup.textContent = '+' + goodsPerClick;
+    popup.style.left = event.clientX + 'px';
+    popup.style.top = event.clientY + 'px';
+    document.body.appendChild(popup);
+    setTimeout(() => popup.remove(), 1000);
+}
 
 function renderUpgrades() {
     const upgradesDiv = document.getElementById('upgrades');
